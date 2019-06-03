@@ -55,7 +55,8 @@ CREATE TABLE posts(
 
 CREATE TABLE comments(
   id SERIAL PRIMARY KEY,
-  body Text,
+  body TEXT,
+  date TIMESTAMP,
   user_id INTEGER REFERENCES users(id),
   post_id INTEGER REFERENCES posts(id)
 );
