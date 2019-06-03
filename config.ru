@@ -4,6 +4,9 @@ require 'sinatra/base'
 
 
 # models
+require './models/UserModel'
+require './models/PostModel'
+require './models/CommmentModel'
 
 # routing
 
