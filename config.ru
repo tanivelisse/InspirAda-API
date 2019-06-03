@@ -1,7 +1,7 @@
 require 'sinatra/base'
 
 # controllers
-
+require './controllers/ApplicationController'
 
 # models
 require './models/UserModel'
