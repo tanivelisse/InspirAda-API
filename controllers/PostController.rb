@@ -1,12 +1,12 @@
 class PostController < ApplicationController
 	# filter for app to understand json requests
 	before do
-    if request.post? || request.put?
-      payload_body = request.body.read
-      @payload = JSON.parse(payload_body).symbolize_keys
-      pp @payload 
-    end
-
+	    if request.post? || request.put?
+	      payload_body = request.body.read
+	      @payload = JSON.parse(payload_body).symbolize_keys
+	      pp @payload 
+	    end
+	end
 	#create post
 	post '/new_post' do
 		# add data to db
@@ -19,7 +19,7 @@ class PostController < ApplicationController
 		new_post.body = @payload[:body]
 
 		# find user for user_id
-		logged_in_user = User.find_by {:username => session[:username]}
+		logged_in_user = User.find_by ({:username => session[:username]})
 		new_post.user_id = logged_in_user.id
 
 		#save new_post
@@ -30,7 +30,7 @@ class PostController < ApplicationController
 			success: true,
 			code: 201,
 			status: "good",
-			message:"Successfully created post ##{new_post.id}"
+			message:"Successfully created post ##{new_post.id}",
 			post: new_post
 		}
 
@@ -54,9 +54,9 @@ class PostController < ApplicationController
 	end
 
 	# update
-	put 'edit/:id' do
+	put '/edit/:id' do
 		# confirm user so he/she/they can edit 
-		user = User.find_by {:username => session[:username]}
+		user = User.find_by ({:username => session[:username]})
 		#find post to edit 
 		post = Post.find params[:id]
 
@@ -101,7 +101,7 @@ class PostController < ApplicationController
 	#delete
 	delete '/:id' do
 		# find post by id
-		post = Post.find :id params[:id]
+		post = Post.find params[:id]
 		#delete found post
 		post.destroy
 		#response
