@@ -3,6 +3,7 @@ require 'sinatra/base'
 # controllers
 require './controllers/ApplicationController'
 require './controllers/UserController'
+require './controllers/PostController'
 
 # models
 require './models/UserModel'
@@ -17,6 +18,10 @@ map ('/') {
 
 map ('/api/v1/users') do
 	run UserController
+end
+
+map ('/api/v1/posts') do
+	run PostController
 end
 
 
