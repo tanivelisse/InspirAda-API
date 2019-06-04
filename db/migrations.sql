@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS inspirada_in_tech;
 CREATE DATABASE inspirada_in_tech;
 
 

@@ -2,19 +2,22 @@ class ApplicationController < Sinatra::Base
 	require 'bundler'
 	Bundler.require()
 
-	# add sessions here
+	# add sessions here // may need to change it 
 	enable :sessions
 
-	# set up our DB connection
+	# set up our DB connection // will need to come back to this
 	ActiveRecord::Base.establish_connection(
-		:addapter => 'postgresql',
+		:adapter => 'postgresql',
 		:database => 'inspirada_in_tech'
 	)
 	
-	# middleware
+	# middleware 
 	use Rack::MethodOverride 
 	set :method_override, true
 
+	get '/' do 
+		"ApplicationController running"
+	end
 
 	#pry test
 	get '/test' do 
