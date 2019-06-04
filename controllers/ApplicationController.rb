@@ -26,4 +26,9 @@ class ApplicationController < Sinatra::Base
 		"pry has finished"
 	end
 
+	# 404 route
+	get '*' do
+    	"404 You are lost"
+  end
+
 end
