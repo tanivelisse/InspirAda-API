@@ -92,9 +92,27 @@ class PostController < ApplicationController
 				message:"Post #{post.id} does not belong to user"
 			}
 
+			response.to_json
+
 		end
 
 	end
+
+	#delete
+	delete '/:id' do
+		# find post by id
+		post = Post.find :id params[:id]
+		#delete found post
+		post.destroy
+		#response
+		response = {
+      		success: true,
+      		status: "good",
+      		message: "Successfully deleted post ##{post.id}"
+    	}
+
+    	response.to_json
+    end
 
 
 
