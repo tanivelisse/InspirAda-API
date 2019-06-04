@@ -1,4 +1,11 @@
 class PostController < ApplicationController
+	# filter for app to understand json requests
+	before do
+    if request.post? || request.put?
+      payload_body = request.body.read
+      @payload = JSON.parse(payload_body).symbolize_keys
+      pp @payload 
+    end
 
 	#create post
 	post '/new_post' do
@@ -12,7 +19,7 @@ class PostController < ApplicationController
 		new_post.body = @payload[:body]
 
 		# find user for user_id
-		logged_in_user = User.find_by({:username => session[:username]})
+		logged_in_user = User.find_by {:username => session[:username]}
 		new_post.user_id = logged_in_user.id
 
 		#save new_post
@@ -45,5 +52,50 @@ class PostController < ApplicationController
 		response.to_json
 
 	end
+
+	# update
+	put 'edit/:id' do
+		# confirm user so he/she/they can edit 
+		user = User.find_by {:username => session[:username]}
+		#find post to edit 
+		post = Post.find params[:id]
+
+		#if post belongs to user
+		if user.id == post.user_id
+			#then edit post
+			post.photo_url = @payload[:photo_url]
+			post.f_name = @payload[:f_name]
+			post.l_name = @payload[:l_name]
+			post.category = @payload[:category]
+			post.title = @payload[:title]
+			post.body = @payload[:body]
+
+			# save changes
+			post.save
+
+			response = {
+				success: true,
+				code: 200,
+				status:"good",
+				message:"Post #{post.title} updated",
+				post: post
+
+			}
+
+			response.to_json
+		else
+			#if post does not belong to user 
+			response = {
+				success: false,
+				code: 201,
+				status:"bad",
+				message:"Post #{post.id} does not belong to user"
+			}
+
+		end
+
+	end
+
+
 
 end
