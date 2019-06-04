@@ -15,7 +15,7 @@ map ('/') {
   run ApplicationController
 }
 
-map ('api/v1/users') do
+map ('/api/v1/users') do
 	run UserController
 end
 

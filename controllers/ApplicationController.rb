@@ -5,6 +5,17 @@ class ApplicationController < Sinatra::Base
 	# add sessions here // may need to change it 
 	enable :sessions
 
+	# CORS
+  	register Sinatra::CrossOrigin
+
+  	configure do
+    	enable :cross_origin
+  	end
+
+  	set :allow_origin, :any
+  	set :allow_methods, [:get, :post, :put, :options, :patch, :delete, :head]
+  	set :allow_credentials, true
+
 	# set up our DB connection // will need to come back to this
 	ActiveRecord::Base.establish_connection(
 		:adapter => 'postgresql',
@@ -15,6 +26,14 @@ class ApplicationController < Sinatra::Base
 	use Rack::MethodOverride 
 	set :method_override, true
 
+	#options requests for CORS
+	options '*' do
+    	response.headers["Allow"] = "HEAD,GET,PUT,PATCH,POST,DELETE,OPTIONS"
+    	response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
+    	200
+  	end
+  	
+  	# ApplicationController
 	get '/' do 
 		"ApplicationController running"
 	end

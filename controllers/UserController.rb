@@ -1,14 +1,27 @@
-class UserController < ApplicatonController
+class UserController < ApplicationController
+
+	# filter for app to understand json requests
+	before do
+	    if request.post? 
+	      payload_body = request.body.read
+	      @payload = JSON.parse(payload_body).symbolize_keys
+	      pp @payload
+
+	    end    
+
+  	end
 
 	# registration route
 	post '/register' do
-		user = User.find username: @payload[:username]
+		user = User.find_by username: @payload[:username]
 
 		# if user does not exist
-		if !username
+		if !user
 			user = User.new
 			user.username = @payload[:username]
 			user.password = @payload[:password]
+			user.email = @payload[:email] 
+			user.about = @payload[:about]
 			user.save
 
 			# session
@@ -37,18 +50,18 @@ class UserController < ApplicatonController
 			}
 
 			response.to_json
-
+		end
 
 	end
 
 	# login 
 	post '/login' do
 
-		user = User.find username: @payload[:username]
+		user = User.find_by username: @payload[:username]
 		pass = @payload[:password]
 
 		# password is now being checked using bcrypt
-		if user && user. authenticate(pass)
+		if user && user.authenticate(pass)
 
 			#session
 			session[:logged_in] = true
@@ -60,7 +73,7 @@ class UserController < ApplicatonController
 				success: true,
 				code: 200,
 				status: "good",
-				message: "User #{user.username} successfully logged in."
+				message: "User #{user.username} successfully logged in.",
 				username: "#{user.username}"
 			}
 
@@ -78,7 +91,7 @@ class UserController < ApplicatonController
 
 			response.to_json
 
-
+		end
 
 	end
 
@@ -93,9 +106,10 @@ class UserController < ApplicatonController
 		response = {
 			success: true,
 			code: 200,
-			status:'neutral'
+			status:"neutral",
 			message: "User #{username} logged out."
 		}
+		response.to_json
 	end
 
 end
