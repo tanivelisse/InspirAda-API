@@ -66,7 +66,36 @@ class UserController < ApplicatonController
 
 			response.to_json
 
+		#else id user does not exist 
+		else
+			#response
+			response = {
+				success: false,
+				code: 200,
+				status: "bad",
+				message: "Sorry, username #{@payload[:username]} is already taken."
+			} 
 
+			response.to_json
+
+
+
+	end
+
+	#logout
+	get '/logout' do 
+		username = session[:username] # grab username for message
+		
+		# session
+		session.destroy
+
+		# response
+		response = {
+			success: true,
+			code: 200,
+			status:'neutral'
+			message: "User #{username} logged out."
+		}
 	end
 
 end
