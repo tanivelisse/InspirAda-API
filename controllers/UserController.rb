@@ -28,6 +28,8 @@ class UserController < ApplicationController
 			session[:logged_in] = true
 			session[:username] = user.username
 			session[:id] = user.id
+			#find new user to return in response
+			@new_user = User.find_by username: session[:username]
 
 			#API response
 			response = {
@@ -35,7 +37,7 @@ class UserController < ApplicationController
 				code: 201,
 				status: "good",
 				message: "User #{user.username} successfully created",
-				username: "#{user.username}"
+				user: @new_user
 			}
 
 			response.to_json
