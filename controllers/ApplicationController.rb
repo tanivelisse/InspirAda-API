@@ -16,11 +16,14 @@ class ApplicationController < Sinatra::Base
   	set :allow_methods, [:get, :post, :put, :options, :patch, :delete, :head]
   	set :allow_credentials, true
 
-	# set up our DB connection // will need to come back to this
-	ActiveRecord::Base.establish_connection(
-		:adapter => 'postgresql',
-		:database => 'inspirada_in_tech'
-	)
+	# # set up our DB connection // will need to come back to this
+	# ActiveRecord::Base.establish_connection(
+	# 	:adapter => 'postgresql',
+	# 	:database => 'inspirada_in_tech'
+	# )
+	
+	# config
+	require './config/environements'
 	
 	# middleware 
 	use Rack::MethodOverride 
@@ -32,7 +35,7 @@ class ApplicationController < Sinatra::Base
     	response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
     	200
   	end
-  	
+
   	# ApplicationController
 	get '/' do 
 		"ApplicationController running"
