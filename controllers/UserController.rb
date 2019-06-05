@@ -70,13 +70,14 @@ class UserController < ApplicationController
 			session[:username] = user.username
 			session[:id] = user.id
 
+			@logged_in_user = User.find_by username: session[:username]
 			# response
 			response = {
 				success: true,
 				code: 200,
 				status: "good",
 				message: "User #{user.username} successfully logged in.",
-				username: "#{user.username}"
+				user: @logged_in_user
 			}
 
 			response.to_json
