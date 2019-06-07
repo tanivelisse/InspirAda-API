@@ -1,5 +1,10 @@
 class PostController < ApplicationController
-	# filter for app to understand json requests
+#--------------------------------------------------------------#
+# THIS CONTROLLER HAS ROUTES FOR BOTH POSTS AND POST'S COMMENTS #
+#--------------------------------------------------------------#
+
+	# FILTER FOR JSON REQUESTS
+
 	before do
 	    if request.post? || request.put?
 	      payload_body = request.body.read
@@ -7,7 +12,13 @@ class PostController < ApplicationController
 	      pp @payload 
 	    end
 	end
-	#create post
+
+#------------------------------------------------------------#
+#                 POSTS' ROUTES
+#------------------------------------------------------------#
+
+	#CREATE POST
+
 	post '/new_post' do
 		# add data to db
 		new_post = Post.new
@@ -37,7 +48,8 @@ class PostController < ApplicationController
 		response.to_json
 	end
 
-	#index for all items
+	#POSTS' INDEX 
+
 	get '/' do 
 		@posts = Post.all
 
@@ -53,7 +65,8 @@ class PostController < ApplicationController
 
 	end
 
-	# update
+	# UPDATE POST
+
 	put '/edit/:id' do
 		# confirm user so he/she/they can edit 
 		user = User.find_by ({:username => session[:username]})
@@ -89,7 +102,7 @@ class PostController < ApplicationController
 				success: false,
 				code: 201,
 				status:"bad",
-				message:"Post #{post.id} does not belong to user"
+				message:"Post does not belong to user"
 			}
 
 			response.to_json
@@ -98,7 +111,8 @@ class PostController < ApplicationController
 
 	end
 
-	#delete
+	#DELETE POST
+
 	delete '/:id' do
 		# find post by id
 		post = Post.find params[:id]
@@ -114,6 +128,76 @@ class PostController < ApplicationController
     	response.to_json
     end
 
+
+
+#------------------------------------------------------------#
+#                 POST'S COMMENTS ROUTES
+#------------------------------------------------------------#
+   
+    # COMMENTS CREATE ROUTE
+
+    post '/comments/new_comment/:post_id' do 
+    	new_comment = Comment.new
+    	new_comment.body
+
+    	# find post for post_id
+    	post_where_comment_is_added = Post.find params[:post_id]
+    	new_comment.post_id = post_where_comment_is_added.id
+    	
+    	# find user for user_id
+		logged_in_user = User.find_by ({:username => session[:username]})
+		new_comment.user_id = logged_in_user.id
+
+		# save
+		new_comment.save
+
+		#response 
+		response = {
+			success: true,
+			code: 201,
+			status: "good",
+			message:"Successfully created comment ##{new_comment.id}",
+			post: new_comment
+		}
+
+		response.to_json
+
+
+    end
+
+    # COMMENTS' INDEX ROUTE
+
+    get '/comments/:post_id' do
+    	post = Post.find params[:post_id]
+    	@post_comments = post.comments
+
+    	# response
+    	response = {
+			success: true,
+			code: 200,
+			status:"good",
+			message:"Found #{@post_comments.length} posts",
+			comments: @post_comments
+		}
+
+		response.to_json
+    end
+   
+    # DELETE COMMENT
+
+    delete '/comments/:comment_id' do 
+    	comment = Comment.find params[:comment_id]
+    	comment.destroy
+
+    	#response
+		response = {
+      		success: true,
+      		status: "good",
+      		message: "Successfully deleted comment ##{comment.id}"
+    	}
+
+    	response.to_json
+    end
 
 
 end
