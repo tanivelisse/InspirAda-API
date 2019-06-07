@@ -89,7 +89,7 @@ class UserController < ApplicationController
 				success: false,
 				code: 200,
 				status: "bad",
-				message: "Sorry, username #{@payload[:username]} is already taken."
+				message: "Sorry, username #{@payload[:username]} not found."
 			} 
 
 			response.to_json

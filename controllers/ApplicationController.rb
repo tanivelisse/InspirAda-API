@@ -3,7 +3,11 @@ class ApplicationController < Sinatra::Base
 	Bundler.require()
 
 	# add sessions here // may need to change it 
-	enable :sessions
+	# enable :sessions
+
+	use Rack::Session::Cookie,  :key => 'rack.session',
+                              	:path => '/',
+                              	:secret => "as;dlfkja;sdlfkja;sldkfja;lskdjfa;lsdkjf"
 
 	# CORS
   	register Sinatra::CrossOrigin
