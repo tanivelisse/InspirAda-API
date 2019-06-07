@@ -135,10 +135,13 @@ class PostController < ApplicationController
 #------------------------------------------------------------#
    
     # COMMENTS CREATE ROUTE
+ 		# add conditional statement to 
+ 		#...return message if user is not
+ 		# ...logged in. 
 
     post '/comments/new_comment/:post_id' do 
     	new_comment = Comment.new
-    	new_comment.body
+    	new_comment.body = @payload[:body]
 
     	# find post for post_id
     	post_where_comment_is_added = Post.find params[:post_id]
@@ -157,7 +160,7 @@ class PostController < ApplicationController
 			code: 201,
 			status: "good",
 			message:"Successfully created comment ##{new_comment.id}",
-			post: new_comment
+			comment: new_comment
 		}
 
 		response.to_json
@@ -169,15 +172,15 @@ class PostController < ApplicationController
 
     get '/comments/:post_id' do
     	post = Post.find params[:post_id]
-    	@post_comments = post.comments
+    	post_comments = post.comments
 
     	# response
     	response = {
 			success: true,
 			code: 200,
 			status:"good",
-			message:"Found #{@post_comments.length} posts",
-			comments: @post_comments
+			message:"Found #{post_comments.length} posts",
+			comments: post_comments
 		}
 
 		response.to_json
