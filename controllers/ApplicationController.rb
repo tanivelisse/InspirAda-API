@@ -27,7 +27,7 @@ class ApplicationController < Sinatra::Base
 	# )
 	
 	# config
-	require './config/environements'
+	require './config/environments'
 	
 	# middleware 
 	use Rack::MethodOverride 

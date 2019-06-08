@@ -1,6 +1,10 @@
 class UserController < ApplicationController
 
-	# filter for app to understand json requests
+#--------------------------------------------------------------#
+# THIS CONTROLLER HAS ROUTES FOR USER AUTH AND USER PROFILE 
+#--------------------------------------------------------------#
+
+	# FILTER FOR JSON REQUESTS
 	before do
 	    if request.post? 
 	      payload_body = request.body.read
@@ -11,7 +15,12 @@ class UserController < ApplicationController
 
   	end
 
-	# registration route
+#------------------------------------------------------------#
+#                 USER'S ROUTES
+#------------------------------------------------------------#
+
+	# REGISTYRATION ROUTE
+
 	post '/register' do
 		user = User.find_by username: @payload[:username]
 
@@ -56,7 +65,8 @@ class UserController < ApplicationController
 
 	end
 
-	# login 
+	# LOGIN ROUTE
+
 	post '/login' do
 
 		user = User.find_by username: @payload[:username]
@@ -98,7 +108,8 @@ class UserController < ApplicationController
 
 	end
 
-	#logout
+	# LOGOUT
+
 	get '/logout' do 
 		username = session[:username] # grab username for message
 		
@@ -114,5 +125,8 @@ class UserController < ApplicationController
 		}
 		response.to_json
 	end
+
+	# USER PROFILE ROUTE
+	# TO BE DONE
 
 end

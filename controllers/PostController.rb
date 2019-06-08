@@ -1,6 +1,6 @@
 class PostController < ApplicationController
 #--------------------------------------------------------------#
-# THIS CONTROLLER HAS ROUTES FOR BOTH POSTS AND POST'S COMMENTS #
+# THIS CONTROLLER HAS ROUTES FOR BOTH POSTS AND POST'S COMMENTS 
 #--------------------------------------------------------------#
 
 	# FILTER FOR JSON REQUESTS
@@ -32,7 +32,6 @@ class PostController < ApplicationController
 		# find user for user_id
 		logged_in_user = User.find_by ({:username => session[:username]})
 		new_post.user_id = logged_in_user.id
-
 		#save new_post
 		new_post.save
 
@@ -150,6 +149,7 @@ class PostController < ApplicationController
     	# find user for user_id
 		logged_in_user = User.find_by ({:username => session[:username]})
 		new_comment.user_id = logged_in_user.id
+		new_comment.user_username = logged_in_user.username
 
 		# save
 		new_comment.save
@@ -173,14 +173,14 @@ class PostController < ApplicationController
     get '/comments/:post_id' do
     	post = Post.find params[:post_id]
     	post_comments = post.comments
-
+  
     	# response
     	response = {
 			success: true,
 			code: 200,
 			status:"good",
 			message:"Found #{post_comments.length} posts",
-			comments: post_comments
+			comments: post_comments,
 		}
 
 		response.to_json

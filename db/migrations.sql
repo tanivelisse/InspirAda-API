@@ -29,9 +29,10 @@ CREATE TABLE posts(
 CREATE TABLE comments(
   id SERIAL PRIMARY KEY,
   body TEXT,
-  date TIMESTAMP,
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
   -- comments belong to user
   user_id INTEGER REFERENCES users(id),
+  user_username VARCHAR(255),
   -- comments belong to posts
   post_id INTEGER REFERENCES posts(id)
 );
