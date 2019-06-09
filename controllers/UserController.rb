@@ -102,7 +102,7 @@ class UserController < ApplicationController
 				success: false,
 				code: 200,
 				status: "bad",
-				message: "Sorry, username #{@payload[:username]} not found."
+				message: "Sorry, wrong username or password."
 			} 
 
 			response.to_json
