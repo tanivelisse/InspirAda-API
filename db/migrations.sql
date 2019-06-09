@@ -23,7 +23,8 @@ CREATE TABLE posts(
   body TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT now(),
   -- post belongs to user
-  user_id INTEGER REFERENCES users(id)
+  user_id INTEGER REFERENCES users(id),
+  user_username VARCHAR(255)
 );
 
 CREATE TABLE comments(

@@ -81,13 +81,16 @@ class UserController < ApplicationController
 			session[:id] = user.id
 
 			@logged_in_user = User.find_by username: session[:username]
+			@logged_in_user_posts = @logged_in_user.posts
 			# response
 			response = {
 				success: true,
 				code: 200,
 				status: "good",
 				message: "User #{user.username} successfully logged in.",
-				user: @logged_in_user
+				user: @logged_in_user,
+				user_posts: @logged_in_user_posts
+
 			}
 
 			response.to_json

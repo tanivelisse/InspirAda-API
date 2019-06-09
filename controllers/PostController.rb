@@ -32,6 +32,7 @@ class PostController < ApplicationController
 		# find user for user_id
 		logged_in_user = User.find_by ({:username => session[:username]})
 		new_post.user_id = logged_in_user.id
+		new_post.user_username = logged_in_user.username
 		#save new_post
 		new_post.save
 
