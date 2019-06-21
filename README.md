@@ -26,11 +26,6 @@ InspirAda React repository: (https://github.com/tanivelisse/InspirAda)
 ### SQL Create Routes
 
 ```
-CREATE DATABASE inspirada_in_tech;
-
-
-\c inspirada_in_tech
-
 
 CREATE TABLE users(
   id SERIAL PRIMARY KEY, 
