@@ -2,9 +2,6 @@ class ApplicationController < Sinatra::Base
 	require 'bundler'
 	Bundler.require()
 
-	# add sessions here // may need to change it 
-	# enable :sessions
-
 	use Rack::Session::Cookie,  :key => 'rack.session',
                               	:path => '/',
                               	:secret => "as;dlfkja;sdlfkja;sldkfja;lskdjfa;lsdkjf"
@@ -20,12 +17,6 @@ class ApplicationController < Sinatra::Base
   	set :allow_methods, [:get, :post, :put, :options, :patch, :delete, :head]
   	set :allow_credentials, true
 
-	# # set up our DB connection // will need to come back to this
-	# ActiveRecord::Base.establish_connection(
-	# 	:adapter => 'postgresql',
-	# 	:database => 'inspirada_in_tech'
-	# )
-	
 	# config
 	require './config/environments'
 	
