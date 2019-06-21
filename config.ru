@@ -4,6 +4,7 @@ require 'sinatra/base'
 require './controllers/ApplicationController'
 require './controllers/UserController'
 require './controllers/PostController'
+require './controllers/CommentController'
 
 # models
 require './models/UserModel'

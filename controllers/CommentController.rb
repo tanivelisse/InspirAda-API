@@ -1,3 +1,5 @@
+class CommentController < ApplicationController
+
 #--------------------------------------------------------------#
 #        THIS CONTROLLER HAS ROUTES FOR COMMENTS
 #--------------------------------------------------------------#
