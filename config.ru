@@ -24,4 +24,8 @@ map ('/api/v1/posts') do
 	run PostController
 end
 
+map ('/api/v1/comments') {
+  run CommentController
+}
+
 
