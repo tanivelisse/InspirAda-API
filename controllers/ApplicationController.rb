@@ -2,9 +2,11 @@ class ApplicationController < Sinatra::Base
 	require 'bundler'
 	Bundler.require()
 
+	 Dotenv.load
+
 	use Rack::Session::Cookie,  :key => 'rack.session',
                               	:path => '/',
-                              	:secret => "as;dlfkja;sdlfkja;sldkfja;lskdjfa;lsdkjf"
+                              	:secret => ENV['SESSION_SECRET']
 
 	# CORS
   	register Sinatra::CrossOrigin

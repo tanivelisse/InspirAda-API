@@ -1,5 +1,5 @@
 #--------------------------------------------------------------#
-#        THIS CONTROLLER HAS ROUTES FOR POSTS  
+#        THIS CONTROLLER HAS ROUTES FOR COMMENTS
 #--------------------------------------------------------------#
 
 # FILTER FOR JSON REQUESTS
