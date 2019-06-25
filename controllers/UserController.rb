@@ -93,8 +93,7 @@ class UserController < ApplicationController
 			# response
 			response = {
 				success: true,
-				code: 200,
-				status: "good",
+				code: 201,
 				message: "User #{user.username} successfully logged in.",
 				user: @logged_in_user,
 				user_posts: @logged_in_user_posts
@@ -109,7 +108,6 @@ class UserController < ApplicationController
 			response = {
 				success: false,
 				code: 200,
-				status: "bad",
 				message: "Sorry, wrong username or password."
 			} 
 
@@ -130,14 +128,10 @@ class UserController < ApplicationController
 		# response
 		response = {
 			success: true,
-			code: 200,
-			status:"neutral",
+			code: 201,
 			message: "User #{username} logged out."
 		}
 		response.to_json
 	end
-
-	# USER PROFILE ROUTE
-	# TO BE DONE
 
 end
