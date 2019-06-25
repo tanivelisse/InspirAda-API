@@ -55,7 +55,7 @@ class UserController < ApplicationController
 		elsif user
 			response = {
 				success: false,
-				code:200,
+				code:403,
 				message:"Sorry, username #{@payload[:username]} is already taken"
 			}
 
@@ -64,7 +64,7 @@ class UserController < ApplicationController
 		elsif user_email
 			response = {
 				success: false,
-				code:200,
+				code:403,
 				message:"Sorry, email #{@payload[:email]} already has an account"
 			}
 
@@ -107,7 +107,7 @@ class UserController < ApplicationController
 			#response
 			response = {
 				success: false,
-				code: 200,
+				code: 403,
 				message: "Sorry, wrong username or password."
 			} 
 
