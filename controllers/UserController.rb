@@ -19,13 +19,13 @@ class UserController < ApplicationController
 #                 USER'S ROUTES
 #------------------------------------------------------------#
 
-	# REGISTYRATION ROUTE
+	# REGISTRATION ROUTE
 
 	post '/register' do
 		user = User.find_by username: @payload[:username]
-
-		# if user does not exist
-		if !user
+		user_email = User.find_by email: @payload[:email]
+		# if user and email does not exist
+		if !user && !user_email
 			user = User.new
 			user.username = @payload[:username]
 			user.password = @payload[:password]
@@ -52,12 +52,20 @@ class UserController < ApplicationController
 			response.to_json
 
 		# else if user does exist
-		else
+		elsif user
 			response = {
 				success: false,
 				code:200,
-				status: "bad",
 				message:"Sorry, username #{@payload[:username]} is already taken"
+			}
+
+			response.to_json
+
+		elsif user_email
+			response = {
+				success: false,
+				code:200,
+				message:"Sorry, email #{@payload[:email]} already has an account"
 			}
 
 			response.to_json
